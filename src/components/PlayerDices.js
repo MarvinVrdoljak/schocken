@@ -33,7 +33,7 @@ function PlayerDices(state) {
         dice.visible = false;
       }
       if (!dice.selected){
-        dice.value = Math.floor(Math.random() * 5) + 1;
+        dice.value = Math.floor(Math.random() * 6) + 1;
       }
       return dice;
     })
