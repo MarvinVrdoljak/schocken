@@ -76,6 +76,7 @@ a{
 input[type="text"]{
   height: 40px;
   margin-right: 10px;
+  border: 2px solid black;
 }
 
 .addPlayer{

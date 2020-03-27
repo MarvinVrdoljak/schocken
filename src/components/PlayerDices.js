@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 
 function PlayerDices(state) {
-  //const [dices, setDices] = useState(state.dices);
 
   function selectDice(id) {
     const dices = state.dices.map(dice => {
@@ -54,8 +53,8 @@ const getDices = state.dices.map((dice, index) => {
   return (
     <div className="dices">
       {getDices}
-      <a href="{#}" className="button" onClick={changeDices}>Würfeln</a>
-      <a href="{#}" className="button" onClick={showHideDices}>Aufdecken/Verdecken</a>
+      <button className="button" onClick={changeDices}>Würfeln</button>
+      <button className="button" onClick={showHideDices}>Auf-/Verdecken</button>
     </div>
   )
 }
