@@ -54,7 +54,7 @@ const getDices = state.dices.map((dice, index) => {
     <div className="dices">
       {getDices}
       <button className="button" onClick={changeDices}>Würfeln</button>
-      <button className="button" onClick={showHideDices}>Aufdecken/Verdecken</button>
+      <button className="button" onClick={showHideDices}>Auf-/Verdecken</button>
     </div>
   )
 }

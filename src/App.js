@@ -28,7 +28,7 @@ function App() {
   const [playerId, setPlayerId] = useState(players.length + 1);
 
   const [response, setResponse] = useState(false);
-  const [endpoint] = useState("localhost:4001");
+  const [endpoint] = useState("http://env-0915955.hidora.com");
 
   const socket = socketIOClient(endpoint);
 
@@ -67,7 +67,6 @@ function App() {
       {id: 3, value: 3, selected: false, visible: true},
     ]}]);
     setPlayerId(playerId + 1);
-    console.log(players)
   }
 
   return (
