@@ -18,10 +18,10 @@ function PlayerDices(state) {
     const dices = state.dices.map(dice => {
         if (dice.selected !== true) {
           dice.visible = !dice.visible;
-        }
-        if (dice.selected === true && dice.visible === false) {
+        } else if (dice.selected === true ) {
           dice.visible = true;
         }
+
         return dice;
       })
       state.updatePlayerDices(state.id, dices);
