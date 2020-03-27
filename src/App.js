@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/layout/Header";
 import AddPlayer from "./components/AddPlayer";
 import Players from "./components/Players";
@@ -13,14 +13,18 @@ function App() {
   ]);
   const [playerId, setPlayerId] = useState(players.length + 1);
 
-  const [endpoint, setEndpoint] = useState({
-    response: true,
-    endpoint: "http://localhost:4001"
-  });
+  const [response, setResponse] = useState(false);
+  const [endpoint] = useState("https://jsonplaceholder.typicode.com/todos/1");
+  // const [endpoint, setEndpoint] = useState({
+  //   response: false,
+  //   endpoint: "https://jsonplaceholder.typicode.com/todos/1"
+  // });
   const socket = socketIOClient(endpoint);
 
-  socket.on("FromAPI", data => setEndpoint( data ));
-  console.log(socket);
+  useEffect(() => {
+    socket.on("FromAPI", data => setResponse({data}));
+  });
+
 
   function deletePlayer(id) {
     setPlayers([...players.filter(player => player.id !== id)]);
@@ -31,11 +35,13 @@ function App() {
     setPlayerId(playerId + 1);
   }
 
+  console.log( {response})
+
   return (
 
     <div className="App">
       <Header />
-      {endpoint.endpoint}
+
       <AddPlayer addPlayer={addPlayer}/>
       <Players players={players} deletePlayer={deletePlayer} />
     </div>
