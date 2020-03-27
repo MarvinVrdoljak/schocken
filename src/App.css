@@ -57,6 +57,10 @@ a{
   right: 10px;
 }
 
+.player{
+  margin-bottom: 15px;
+}
+
 .button{
   height: 40px;
   background-color: gray;
