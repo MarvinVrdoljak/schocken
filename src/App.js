@@ -3,6 +3,7 @@ import Header from "./components/layout/Header";
 import AddPlayer from "./components/AddPlayer";
 import Players from "./components/Players";
 import socketIOClient from "socket.io-client";
+import PlayerDices from "./components/PlayerDices";
 
 import "./App.css";
 
@@ -27,12 +28,19 @@ function App() {
   const [playerId, setPlayerId] = useState(players.length + 1);
 
   const [response, setResponse] = useState(false);
-  const [endpoint] = useState("https://jsonplaceholder.typicode.com/todos/1");
+  const [endpoint] = useState("localhost:4001");
+
   const socket = socketIOClient(endpoint);
 
-  useEffect(() => {
-    socket.on("FromAPI", data => setResponse({data}));
-  });
+  useEffect(() =>{
+    console.log(players);
+        socket.emit("roll", players);
+  })
+
+  socket.on("roll", data => {
+    console.log(data);
+  })
+
 
   function updatePlayerDices(id, dices){
 
