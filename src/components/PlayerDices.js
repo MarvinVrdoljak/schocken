@@ -13,18 +13,24 @@ function PlayerDices(state) {
     state.updatePlayerDices(state.id, dices);
   }
 
-  function showHideDices(){
+  function showDices(){
     const dices = state.dices.map(dice => {
-        if (dice.selected !== true) {
-          dice.visible = !dice.visible;
-        } else if (dice.selected === true ) {
-          dice.visible = true;
-        }
-
+        dice.visible = true;
         return dice;
       })
       state.updatePlayerDices(state.id, dices);
   }
+
+  function hideDices(){
+    const dices = state.dices.map(dice => {
+        if (dice.selected !== true) {
+          dice.visible = false;
+        }
+        return dice;
+      })
+      state.updatePlayerDices(state.id, dices);
+  }
+
 
  function changeDices(){
   let dices = state.dices.map(dice => {
@@ -54,7 +60,8 @@ const getDices = state.dices.map((dice, index) => {
     <div className="dices">
       {getDices}
       <button className="button" onClick={changeDices}>Würfeln</button>
-      <button className="button" onClick={showHideDices}>Auf-/Verdecken</button>
+      <button className="button" onClick={showDices}>Auf</button>
+      <button className="button" onClick={hideDices}>Zu</button>
     </div>
   )
 }
