@@ -4,7 +4,7 @@ import PlayerItem from './PlayerItem';
 function Players(state) {
   return state.players.map((player, index) => (
     <div key={index}>
-      <PlayerItem  player={player} deletePlayer={state.deletePlayer}/>
+      <PlayerItem player={player} updatePlayerDices={state.updatePlayerDices} deletePlayer={state.deletePlayer} />
     </div>
   ));
 }

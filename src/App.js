@@ -8,22 +8,44 @@ import "./App.css";
 
 function App() {
   const [players, setPlayers] = useState([
-    { id: 1, name: "Marvin"},
-    { id: 2, name: "Simon"},
+    { id: 1,
+      name: "Marvin", dices: [
+        {id: 1, value: 1, selected: false, visible: true},
+        {id: 2, value: 2, selected: false, visible: true},
+        {id: 3, value: 3, selected: false, visible: true},
+      ]
+    },
+    { id: 2,
+      name: "Fluffy", dices: [
+        {id: 1, value: 1, selected: false, visible: true},
+        {id: 2, value: 2, selected: false, visible: true},
+        {id: 3, value: 3, selected: false, visible: true},
+      ]
+    },
   ]);
+
   const [playerId, setPlayerId] = useState(players.length + 1);
 
   const [response, setResponse] = useState(false);
   const [endpoint] = useState("https://jsonplaceholder.typicode.com/todos/1");
-  // const [endpoint, setEndpoint] = useState({
-  //   response: false,
-  //   endpoint: "https://jsonplaceholder.typicode.com/todos/1"
-  // });
   const socket = socketIOClient(endpoint);
 
   useEffect(() => {
     socket.on("FromAPI", data => setResponse({data}));
   });
+
+  function updatePlayerDices(id, dices){
+
+    console.log(dices);
+    setPlayers(
+      players.map(player => {
+        if (player.id == id) {
+          player.dices = dices;
+        }
+        return player;
+      })
+    )
+  }
 
 
   function deletePlayer(id) {
@@ -31,19 +53,20 @@ function App() {
   }
 
   function addPlayer(name) {
-    setPlayers([...players, {id: playerId, name}]);
+    setPlayers([...players, {id: playerId, name, dices: [
+      {id: 1, value: 1, selected: false, visible: true},
+      {id: 2, value: 2, selected: false, visible: true},
+      {id: 3, value: 3, selected: false, visible: true},
+    ]}]);
     setPlayerId(playerId + 1);
+    console.log(players)
   }
 
-  console.log( {response})
-
   return (
-
     <div className="App">
       <Header />
-
       <AddPlayer addPlayer={addPlayer}/>
-      <Players players={players} deletePlayer={deletePlayer} />
+      <Players players={players} updatePlayerDices={updatePlayerDices} deletePlayer={deletePlayer}/>
     </div>
   );
 }
