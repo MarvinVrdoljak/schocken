@@ -18,6 +18,9 @@ function PlayerDices(state) {
         if (dice.selected !== true) {
           dice.visible = !dice.visible;
         }
+        if (dice.selected === true && dice.visible === false) {
+          dice.visible = true;
+        }
         return dice;
       })
       state.updatePlayerDices(state.id, dices);
