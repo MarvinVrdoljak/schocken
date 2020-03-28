@@ -19,8 +19,9 @@ function onSubmit(e){
 }
 
   return (
-    <div className="">
-      <form onSubmit={onSubmit} className="addPlayer">
+    <div className="addPlayer">
+      <h1>Schocoronia</h1>
+      <form onSubmit={onSubmit} className="addPlayer__form">
         <input type="text" name="title" placholder="Spieler hinzufügen" value={newPlayer} onChange={onChange}/>
         <input className="button" type="submit" value="Spieler hinzufügen"/>
       </form>

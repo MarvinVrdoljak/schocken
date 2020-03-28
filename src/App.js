@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import Header from "./components/layout/Header";
+// import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AddPlayer from "./components/AddPlayer";
 import Players from "./components/Players";
-import socketIOClient from "socket.io-client";
-import PlayerDices from "./components/PlayerDices";
+import bg from "./images/board.jpg";
+// import socketIOClient from "socket.io-client";
 
 import "./App.css";
 
 function App() {
   const [players, setPlayers] = useState([
     { id: 1,
-      name: "Marvin", dices: [
+      name: "Marvin", round: 0, batch: 0, dices: [
         {id: 1, value: 1, selected: false, visible: true},
         {id: 2, value: 2, selected: false, visible: true},
         {id: 3, value: 3, selected: false, visible: true},
       ]
     },
     { id: 2,
-      name: "Fluffy", dices: [
+      name: "Simon", round: 0, batch: 0, dices: [
         {id: 1, value: 1, selected: false, visible: true},
         {id: 2, value: 2, selected: false, visible: true},
         {id: 3, value: 3, selected: false, visible: true},
@@ -27,28 +27,29 @@ function App() {
 
   const [playerId, setPlayerId] = useState(players.length + 1);
 
-  const [response, setResponse] = useState(false);
-  const [endpoint] = useState("http://env-0915955.hidora.com");
+  // const [response, setResponse] = useState(false);
+  // const [endpoint] = useState("https://node62935-env-0915955.hidora.com:11065");
 
-  const socket = socketIOClient(endpoint);
+  // const socket = socketIOClient(endpoint);
 
-  useEffect(() =>{
-    console.log(players);
-        socket.emit("roll", players);
-  })
+  // useEffect(() =>{
+  //   console.log(players);
+  //       socket.emit("roll", players);
+  // })
 
-  socket.on("roll", data => {
-    console.log(data);
-  })
+  // socket.on("roll", data => {
+  //   console.log(data);
+  // })
 
 
-  function updatePlayerDices(id, dices){
-
-    console.log(dices);
+  function updatePlayerDices(id, dices, addRound){
     setPlayers(
       players.map(player => {
-        if (player.id == id) {
+        if (player.id === id) {
           player.dices = dices;
+          if(addRound){
+            player.round =  player.round + 1;
+          }
         }
         return player;
       })
@@ -61,7 +62,7 @@ function App() {
   }
 
   function addPlayer(name) {
-    setPlayers([...players, {id: playerId, name, dices: [
+    setPlayers([...players, {id: playerId, name, round: 0, batch: 0, dices: [
       {id: 1, value: 1, selected: false, visible: true},
       {id: 2, value: 2, selected: false, visible: true},
       {id: 3, value: 3, selected: false, visible: true},
@@ -69,11 +70,51 @@ function App() {
     setPlayerId(playerId + 1);
   }
 
+  function resetRound(){
+    setPlayers(
+      players.map(player => {
+        player.round = 1;
+        player.dices = [
+          {id: 1, value: Math.floor(Math.random() * 6) + 1, selected: false, visible: false},
+          {id: 2, value: Math.floor(Math.random() * 6) + 1, selected: false, visible: false},
+          {id: 3, value: Math.floor(Math.random() * 6) + 1, selected: false, visible: false},
+        ]
+        return player;
+      })
+    )
+  }
+
+  function addBatch(id){
+    setPlayers(
+      players.map(player => {
+        if (player.id === id) {
+          player.batch =  player.batch + 1;
+        }
+        return player;
+      })
+    )
+  }
+
+  function removeBatch(id){
+    setPlayers(
+      players.map(player => {
+        if (player.id === id &&  player.batch >= 1) {
+          player.batch =  player.batch - 1;
+        }
+        return player;
+      })
+    )
+  }
+
   return (
     <div className="App">
-      <Header />
       <AddPlayer addPlayer={addPlayer}/>
-      <Players players={players} updatePlayerDices={updatePlayerDices} deletePlayer={deletePlayer}/>
+      <main className="board" style={{backgroundImage:  `url(${bg})`}}>
+        <Players players={players} updatePlayerDices={updatePlayerDices} deletePlayer={deletePlayer} addBatch={addBatch} removeBatch={removeBatch} />
+        <div className="footer">
+          <button className="button" onClick={resetRound}>Runde neu Starten</button>
+        </div>
+      </main>
     </div>
   );
 }
