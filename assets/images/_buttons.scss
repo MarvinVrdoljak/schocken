@@ -58,7 +58,6 @@
 
 .disable {
   cursor: not-allowed !important;
-  pointer-events: none;
   background-color: lighten($black, 5%) !important;
   opacity: 0.75;
 }

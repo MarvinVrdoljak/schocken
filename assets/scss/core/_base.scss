@@ -24,3 +24,7 @@ body {
 :before {
   box-sizing: border-box;
 }
+
+small{
+  font-size: rem-calc(13);
+}
